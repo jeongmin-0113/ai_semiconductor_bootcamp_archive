@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
 module adder_fnd (
+    input clk,  // from external
+    input reset,  // from external
     input [7:0] a,
     input [7:0] b,
-    input btn_L,
-    input btn_R,
     output [3:0] fnd_com,
     output [7:0] fnd_data,
     output c
@@ -13,8 +13,9 @@ module adder_fnd (
     wire [7:0] s;
 
     fnd_controller U_FND_CNTL (
+        .clk(clk),
+        .reset(reset),
         .fnd_in(s),
-        .digit_sel({btn_L, btn_R}),
         .fnd_com(fnd_com),
         .fnd_data(fnd_data)
     );

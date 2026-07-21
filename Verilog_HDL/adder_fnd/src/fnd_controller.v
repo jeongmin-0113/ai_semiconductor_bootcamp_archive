@@ -1,16 +1,31 @@
 `timescale 1ns / 1ps
 
 module fnd_controller (
+    input clk,
+    input reset,
     input [7:0] fnd_in,
-    input [1:0] digit_sel,
     output [3:0] fnd_com,
     output [7:0] fnd_data
 );
     wire [3:0] w_digit_1, w_digit_10, w_digit_100, w_digit_1000;
     wire [3:0] bcd;
+    wire [1:0] w_digit_sel;
+    wire clk_reg;
+
+    clk_div U_CLK_DIV (
+        .clk(clk),
+        .reset(reset),
+        .o_1khz(clk_reg)
+    );
+
+    counter_4 U_COUNTER_4 (
+        .clk(clk_reg),
+        .reset(reset),
+        .digit_sel(w_digit_sel)
+    );
 
     decoder_2x4 U_DC (
-        .sel(digit_sel),
+        .sel(w_digit_sel),
         .an_com(fnd_com)
     );
 
@@ -27,7 +42,7 @@ module fnd_controller (
         .digit_10(w_digit_10),
         .digit_100(w_digit_100),
         .digit_1000(w_digit_1000),
-        .sel(digit_sel),
+        .sel(w_digit_sel),
         .mux_out(bcd)
     );
 
@@ -35,6 +50,61 @@ module fnd_controller (
         .bcd_in (bcd),
         .bcd_out(fnd_data)
     );
+
+endmodule
+
+module clk_div (
+    input  clk,
+    input  reset,
+    output o_1khz
+);
+
+    reg [15:0] counter_reg;
+    reg clk_reg;
+
+    assign o_1khz = clk_reg;
+
+    always @(posedge clk, posedge reset) begin
+        if (reset) begin
+            counter_reg <= 0;
+            clk_reg <= 1'b0;
+        end else begin
+            // <= non blocking은 일단 예약 걸고 always 끝난 다음 한번에 반영
+            counter_reg <= counter_reg + 1;
+            // if문에서 읽어오는 건 예약 반영되기 전의 값.
+            if (counter_reg == (50000 - 1)) begin
+                counter_reg <= 0;
+                clk_reg <= ~clk_reg;
+            end
+        end
+    end
+
+endmodule
+
+module counter_4 (
+    input clk,
+    input reset,
+    output [1:0] digit_sel
+);
+
+    reg [1:0] counter_reg;
+    // output과 counter_reg 연결
+    // output을 reg로 바꾸는 거랑 차이 없음
+    assign digit_sel = counter_reg;
+
+    // sequential logic (SL)
+    // reset: clock 비동기 reset
+    // reset을 넣어야 하는 이유: counter_reg의 초기화를 위함. 초기화하지 않으면 x라 동작이 이상함
+    always @(posedge clk, posedge reset) begin
+        if (reset) begin
+            counter_reg <= 0;
+        end else begin
+            // operation
+            // reset은 0이고 clk 상승엣지가 온 것 -> 바로 +1
+            // 자동으로 0~3 까지만 카운트: 11 + 1 = 00 (c는 날아감)
+            counter_reg <= counter_reg + 1;
+        end
+    end
 
 endmodule
 
