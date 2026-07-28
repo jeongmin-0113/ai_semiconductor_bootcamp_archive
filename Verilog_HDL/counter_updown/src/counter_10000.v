@@ -4,9 +4,9 @@
 module top_module_10000 (
     input        clk,
     input        reset,
-    input        btn_L,     // 0:up / 1:down
-    input        btn_R,      // 0: stop / 1:run
-    input        btn_UP,    // 0:normal / 1:clear
+    input        btn_L,    // 0:up / 1:down
+    input        btn_R,    // 0: stop / 1:run
+    input        btn_UP,   // 0:normal / 1:clear
     output [3:0] fnd_com,
     output [7:0] fnd_data
 );
@@ -14,19 +14,40 @@ module top_module_10000 (
     wire [13:0] w_count;
     wire w_reset;
 
+    wire w_bd_run_stop, w_bd_clear, w_bd_mode;
     wire w_run_stop, w_clear, w_mode;
 
     assign w_reset = reset | w_clear;
 
     // btn debounce logic 필요
-    // btn - clk 비동기이므로 디바운스가 필요한 것임
+    // btn - clk 비동기이므로 디바운스
+    btn_debouncer BD_RUNSTOP (
+        .clk  (clk),
+        .reset(reset),
+        .i_btn(btn_L),
+        .o_btn(w_bd_run_stop)
+    );
+
+    btn_debouncer BD_CLEAR (
+        .clk  (clk),
+        .reset(reset),
+        .i_btn(btn_R),
+        .o_btn(w_bd_clear)
+    );
+
+    btn_debouncer BD_MODE (
+        .clk  (clk),
+        .reset(reset),
+        .i_btn(btn_UP),
+        .o_btn(w_bd_mode)
+    );
 
     control_unit U_CNTL (
         .clk(clk),
         .reset(reset),
-        .i_runstop(btn_L),
-        .i_clear(btn_R),
-        .i_mode(btn_UP),
+        .i_runstop(w_bd_run_stop),
+        .i_clear(w_bd_clear),
+        .i_mode(w_bd_mode),
         .o_runstop(w_run_stop),
         .o_clear(w_clear),
         .o_mode(w_mode)
