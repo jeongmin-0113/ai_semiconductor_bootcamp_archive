@@ -3,6 +3,7 @@
 module top_stopwatch (
     input clk,
     input reset,
+    input [7:0] rx,
     input btn_L,  // runstop(s) / 자리변경(w) 
     input btn_R,  // clear(s) / 자리변경(w)
     input btn_UP,  // mode(s) / up(w)
@@ -10,9 +11,10 @@ module top_stopwatch (
     input  [2:0] sw,        // sw[0]: 0-초:밀리초/1-시:분 sw[1]: 0-stopwatch/1-watch, sw[2] : watch의 12시간제
     output [3:0] fnd_com,
     output [7:0] fnd_data,
-    output led  // indicator
+    output led,  // indicator
+    output [7:0] tx
 );
-    
+
     // btn debounder OUTPUT SIGNAL
     wire w_btn_L, w_btn_R, w_btn_UP, w_btn_DOWN;
 
@@ -93,11 +95,46 @@ module top_stopwatch (
         .o_btn(w_btn_DOWN)
     );
 
+    wire [7:0] w_rx_data;
+    wire w_rx_done;
+
+    reg [7:0] w_data_reg;
+
+    always @(posedge clk, posedge reset) begin
+        if (reset) w_data_reg = 8'h00;
+        else if (w_rx_done) w_data_reg = w_rx_data;
+    end
+
+    uart_loop_back U_LOOP_BACK (
+        .clk(clk),
+        .reset(reset),
+        .rx(rx),
+        .tx(tx),
+        .rx_data(w_rx_data),
+        .rx_done(w_rx_done)
+    );
+
+    ascii_decoder U_ASCII_DECODER (
+        .i_data(w_data_reg),
+        .run(),
+        .stop(),
+        .clear(),
+        .mode(),
+        .up(),
+        .down(),
+        .left(),
+        .right()
+    );
+
+    // todo: 디코딩된 signal들을 1 clk pulse로 변경
+    // todo: 1 clk pulse된 signal들 or로 control unit 연결
+    // todo: run/stop 나뉘어있는 rx signal을 control unit에서 통합
+
     // stopwatch control unit
     control_unit U_CNTL_UNIT (
         .clk(clk),
         .reset(reset),
-        .i_runstop(w_btn_L& !sw[1]),
+        .i_runstop(w_btn_L & !sw[1]),
         .i_clear(w_btn_R & !sw[1]),
         .i_mode(w_btn_UP & !sw[1]),
         .i_save_load(w_btn_DOWN & !sw[1]),  // btn down
@@ -112,18 +149,18 @@ module top_stopwatch (
 
     // stopwatch datapath
     stopwatch_datapath U_DATAPATH (
-        .clk    (clk),
-        .reset  (reset),
-        .runstop(w_runstop),
-        .clear  (w_clear),
-        .mode   (w_mode),
-        .save (w_save),
-        .load (w_load),
+        .clk            (clk),
+        .reset          (reset),
+        .runstop        (w_runstop),
+        .clear          (w_clear),
+        .mode           (w_mode),
+        .save           (w_save),
+        .load           (w_load),
         .o_is_data_saved(w_is_data_saved),
-        .m_sec  (w_msec_stopwatch),
-        .sec    (w_sec_stopwatch),
-        .min    (w_min_stopwatch),
-        .hour   (w_hour_stopwatch)
+        .m_sec          (w_msec_stopwatch),
+        .sec            (w_sec_stopwatch),
+        .min            (w_min_stopwatch),
+        .hour           (w_hour_stopwatch)
     );
 
     // watch control unit
@@ -170,18 +207,18 @@ module stopwatch_datapath #(
     MIN_WIDTH = 6,
     HOUR_WIDTH = 5
 ) (
-    input                   clk,
-    input                   reset,
-    input                   runstop,
-    input                   clear,
-    input                   mode,
-    input                   save,
-    input                   load,
-    output reg                 o_is_data_saved,
-    output [MSEC_WIDTH-1:0] m_sec,
-    output [ SEC_WIDTH-1:0] sec,
-    output [ MIN_WIDTH-1:0] min,
-    output [HOUR_WIDTH-1:0] hour
+    input                       clk,
+    input                       reset,
+    input                       runstop,
+    input                       clear,
+    input                       mode,
+    input                       save,
+    input                       load,
+    output reg                  o_is_data_saved,
+    output     [MSEC_WIDTH-1:0] m_sec,
+    output     [ SEC_WIDTH-1:0] sec,
+    output     [ MIN_WIDTH-1:0] min,
+    output     [HOUR_WIDTH-1:0] hour
 );
 
     wire w_tick_msec, w_tick_sec, w_tick_min, w_tick_hour;
@@ -195,15 +232,15 @@ module stopwatch_datapath #(
     always @(posedge clk, posedge reset) begin
         if (reset) begin
             w_saved_msec <= 0;
-            w_saved_sec  <= 0;
-            w_saved_min  <= 0;
+            w_saved_sec <= 0;
+            w_saved_min <= 0;
             w_saved_hour <= 0;
             o_is_data_saved <= 0;
         end else begin
             if (save) begin
                 w_saved_msec <= m_sec;
-                w_saved_sec  <= sec;
-                w_saved_min  <= min;
+                w_saved_sec <= sec;
+                w_saved_min <= min;
                 w_saved_hour <= hour;
                 o_is_data_saved <= 1;
             end

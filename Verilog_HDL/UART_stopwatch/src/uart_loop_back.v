@@ -1,15 +1,16 @@
 `timescale 1ns / 1ps
 
+
 module ascii_decoder (
-    input [7:0] i_data,
-    output run,
-    output stop,
-    output clear,
-    output mode,
-    output up,
-    output down,
-    output left,
-    output right
+    input  [7:0] i_data,
+    output       run,
+    output       stop,
+    output       clear,
+    output       mode,
+    output       up,
+    output       down,
+    output       left,
+    output       right
 );
     reg [7:0] o_signals;
     assign {run, stop, clear, mode, up, down, left, right} = o_signals;
@@ -32,12 +33,12 @@ module ascii_decoder (
 endmodule
 
 module uart_loop_back (
-    input clk,
-    input reset,
-    input rx,
-    output tx,
+    input        clk,
+    input        reset,
+    input        rx,
+    output       tx,
     output [7:0] rx_data,
-    output rx_done
+    output       rx_done
 );
 
     wire w_baud_tick_x16;
