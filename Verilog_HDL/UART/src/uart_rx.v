@@ -29,18 +29,19 @@ module uart_rx (
     // state reg
     always @(posedge clk, posedge reset) begin
         if (reset) begin
-            state_reg <= IDLE;
-            data_reg  <= 8'h00;
-            tick_count <= 4'h0;
-            bit_count  <= 3'b000;
-            rx_done_reg <= 1'b0;
+            state_reg   <= IDLE;
+            data_reg    <= 0;
+            tick_count  <= 0;
+            bit_count   <= 0;
+            rx_done_reg <= 0;
         end else begin
-            state_reg  <= state_next;
-            data_reg   <= data_next;
-            tick_count <= tick_count_next;
-            bit_count  <= bit_count_next;
+            state_reg   <= state_next;
+            data_reg    <= data_next;
+            tick_count  <= tick_count_next;
+            bit_count   <= bit_count_next;
             rx_done_reg <= rx_done_next;
         end
+
     end
 
     // next state CL
@@ -53,13 +54,13 @@ module uart_rx (
         case (state_reg)
             IDLE: begin
                 rx_done_next = 0;
+                bit_count_next = 0;
                 if (i_baud_tick) begin
                     if (!rx) begin
                         if (tick_count >= 7) begin
                             // tick 왔을때 rx 0이고 tick count 7이면
                             // 다음 state -> START로!
-                            bit_count_next = 3'b000;
-                            tick_count_next = 4'h0;
+                            tick_count_next = 0;
                             state_next = START;
                         end else begin
                             // tick 왔을때 rx 0인데 tick count 7보다 작음
@@ -69,9 +70,9 @@ module uart_rx (
                     end else begin
                         // tick 왔을때 rx 1
                         // state idle임
-                        tick_count_next = 4'h0;
-                        bit_count_next = 3'b000;
-                        data_next = 8'h00;
+                        tick_count_next = 0;
+                        bit_count_next  = 0;
+                        //data_next = 8'h00;
                     end
                 end
             end
@@ -98,7 +99,7 @@ module uart_rx (
 
                         // sipo, bit shift 방식
                         // MSB 자리로 계속 넣어서 LSB 방향으로 밀어낸다
-                        data_next = {rx, data_reg[6:0]};
+                        data_next = {rx, data_reg[7:1]};
                     end
 
                     if (tick_count >= 15) begin
@@ -123,21 +124,21 @@ module uart_rx (
             end
             STOP: begin
                 if (i_baud_tick) begin
-                    if (tick_count >= 7) begin
-                        // tick 왔고 8번 셌음
-                        // 그럼 다음 state -> IDLE
-                        tick_count_next = 4'h0;
-                        bit_count_next = 3'b000;
-                        data_next = 8'h00;
-                        state_next = IDLE;
+                    // if (tick_count >= 0) begin
+                    // tick 왔고 8번 셌음
+                    // 그럼 다음 state -> IDLE
+                    // tick_count_next = 4'h0;
+                    // bit_count_next = 3'b000;
+                    //data_next = 8'h00;
+                    state_next   = IDLE;
 
-                        // 다 끝났으니까 rx_done 띄우기
-                        rx_done_next = 1'b1;
-                    end else begin
-                        // tick 왔고 아직 8번 안 셌음
-                        // 그럼 tick 한 번 더 세기
-                        tick_count_next = tick_count + 1;
-                    end
+                    // 다 끝났으니까 rx_done 띄우기
+                    rx_done_next = 1'b1;
+                    // end else begin
+                    //     // tick 왔고 아직 8번 안 셌음
+                    //     // 그럼 tick 한 번 더 세기
+                    //     tick_count_next = tick_count + 1;
+                    // end
                 end
             end
         endcase

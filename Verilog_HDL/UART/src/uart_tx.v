@@ -4,34 +4,17 @@
 module uart_controller (
     input        clk,
     input        reset,
-    input        btn_R,
-    output [7:0] led,
+    input        tx_start,
+    input  [7:0] tx_data,
+    input        rx,
+    output [7:0] rx_data,
+    output       tx_busy,
+    output       tx_done,
+    output       rx_done,
     output       tx
+
 );
-    wire w_baud_tick, w_baud_tick_x16;
-    wire w_tx_start;
-
-    btn_debouncer U_BD_UART_TX_START (
-        .clk  (clk),
-        .reset(reset),
-        .i_btn(btn_R),
-        .o_btn(w_tx_start)
-    );
-
-    baud_tick U_BAUD_TICK (
-        .clk(clk),
-        .reset(reset),
-        .o_baud_tick(w_baud_tick)
-    );
-
-    uart_tx U_UART_TX (
-        .clk(clk),
-        .reset(reset),
-        .i_baud_tick(w_baud_tick),
-        .tx_start(w_tx_start),
-        .tx_data(8'h30),
-        .tx(tx)
-    );
+    wire w_baud_tick_x16;
 
     baud_tick_x16 U_BAUD_TICK_x16 (
         .clk(clk),
@@ -39,13 +22,24 @@ module uart_controller (
         .o_baud_tick(w_baud_tick_x16)
     );
 
+    uart_tx U_UART_TX (
+        .clk(clk),
+        .reset(reset),
+        .i_baud_tick(w_baud_tick_x16),
+        .tx_start(tx_start),
+        .tx_data(tx_data),
+        .tx(tx),
+        .tx_busy(tx_busy),
+        .tx_done(tx_done)
+    );
+
     uart_rx U_UART_RX (
         .clk(clk),
         .reset(reset),
         .i_baud_tick(w_baud_tick_x16),
-        .rx(tx),
-        .rx_data(led),
-        .rx_done()
+        .rx(rx),
+        .rx_data(rx_data),
+        .rx_done(rx_done)
     );
 endmodule
 
@@ -61,15 +55,18 @@ module uart_tx (
 );
 
     // state
-    localparam [2:0] IDLE = 3'b000;
-    localparam [2:0] WAIT = 3'b001;  // tx_start는 도착, baud_tick 대기
-    localparam [2:0] START = 3'b010;
-    localparam [2:0] DATA = 3'b011;
-    localparam [2:0] STOP = 3'b100;
+    localparam [1:0] IDLE = 2'b00;
+    //localparam [2:0] WAIT = 3'b001;  // tx_start는 도착, baud_tick 대기
+    localparam [1:0] START = 2'b01;
+    localparam [1:0] DATA = 2'b10;
+    localparam [1:0] STOP = 2'b11;
 
-    reg [2:0] c_state, n_state;
+    reg [1:0] c_state, n_state;
     reg [2:0] bit_count_reg, bit_count_next;
     reg tx_next, tx_reg;
+
+    // x16 baud tick을 위한 0~15 카운터
+    reg [3:0] tick_count_reg, tick_count_next;
 
     // tx_data를 저장하는 레지스터
     reg [7:0] data_reg, data_next;
@@ -84,19 +81,21 @@ module uart_tx (
     // state & output register
     always @(posedge clk, posedge reset) begin
         if (reset) begin
-            c_state       <= IDLE;
-            tx_reg        <= 1;
-            bit_count_reg <= 0;
-            data_reg      <= 8'h00;
-            busy_reg      <= 1'b0;
-            done_reg      <= 1'b0;
+            c_state        <= IDLE;
+            tx_reg         <= 1;
+            bit_count_reg  <= 0;
+            data_reg       <= 8'h00;
+            busy_reg       <= 1'b0;
+            done_reg       <= 1'b0;
+            tick_count_reg <= 4'h0;
         end else begin
-            c_state       <= n_state;
-            tx_reg        <= tx_next;
-            bit_count_reg <= bit_count_next;
-            data_reg      <= data_next;
-            busy_reg      <= busy_next;
-            done_reg      <= done_next;
+            c_state        <= n_state;
+            tx_reg         <= tx_next;
+            bit_count_reg  <= bit_count_next;
+            data_reg       <= data_next;
+            busy_reg       <= busy_next;
+            done_reg       <= done_next;
+            tick_count_reg <= tick_count_next;
         end
     end
 
@@ -108,6 +107,7 @@ module uart_tx (
         data_next = data_reg;
         done_next = done_reg;
         busy_next = busy_reg;
+        tick_count_next = tick_count_reg;
         case (c_state)
             IDLE: begin
                 // idle일 때는 done, busy 모두 0
@@ -117,40 +117,69 @@ module uart_tx (
                 if (tx_start) begin
                     // start 신호 받고 다음 clk (상태 변경과 동시에) busy 1로 변경
                     busy_next = 1'b1;
-                    n_state   = WAIT;
+                    // tick count 초기화하고 상태 전이
+                    tick_count_next = 0;
+
+                    n_state = START;
+                    // data를 레지스터에 저장하고 start로 감
                     data_next = tx_data;
                 end
             end
-            WAIT: begin  // tx_start는 도착, baud_tick 대기
-                tx_next = 1'b1;
-                if (i_baud_tick)
-                    n_state = START;  // baud_tick 도착하면 start
-            end
+            // WAIT: begin  // tx_start는 도착, baud_tick 대기
+            //     tx_next = 1'b1;
+            //     if (i_baud_tick)
+            //         n_state = START;  // baud_tick 도착하면 start
+            // end
             START: begin
                 tx_next = 1'b0;
                 bit_count_next = 3'b0;
-                if (i_baud_tick) n_state = DATA;
+                if (i_baud_tick) begin
+                    if (tick_count_reg >= 15) begin
+                        tick_count_next = 0;
+                        n_state = DATA;
+                    end else begin
+                        tick_count_next = tick_count_reg + 1;
+                    end
+                end
             end
 
             DATA: begin
-                // tx_data 말고 저장된 data_reg 사용
-                tx_next = data_reg[bit_count_reg];
                 if (i_baud_tick) begin
-                    if (bit_count_reg >= 7) n_state = STOP;
-                    else begin
-                        n_state = DATA;
-                        bit_count_next = bit_count_reg + 1;
+                    if (tick_count_reg == 0) begin
+                        // tx_data 말고 저장된 data_reg 사용
+                        // shift 방식으로 PISO 구현 -> LSB부터 전송
+                        tx_next   = data_reg[0];
+                        data_next = {1'b0, data_reg[7:1]};
+                        // data_next = data_reg >> 1; // 논리 bit shift (부호확장x)
+                    end
+
+                    if (tick_count_reg >= 15) begin
+                        tick_count_next = 0;
+                        if (bit_count_reg >= 7) begin
+                            // 전송 완료 -> STOP으로
+                            n_state = STOP;
+                        end else begin
+                            // data의 다음 bit 전송
+                            n_state = DATA;
+                            bit_count_next = bit_count_reg + 1;
+                        end
+                    end else begin
+                        tick_count_next = tick_count_reg + 1;
                     end
                 end
             end
             STOP: begin
                 tx_next = 1'b1;
                 if (i_baud_tick) begin
-                    // stop 끝남과 동시에 busy도 0
-                    busy_next = 1'b0;
-                    // stop 끝남과 동시에 done이 1
-                    done_next = 1'b1;
-                    n_state   = IDLE;
+                    if (tick_count_reg >= 15) begin
+                        // stop 끝남과 동시에 busy도 0
+                        busy_next = 1'b0;
+                        // stop 끝남과 동시에 done이 1
+                        done_next = 1'b1;
+                        n_state   = IDLE;
+                    end else begin
+                        tick_count_next = tick_count_reg + 1;
+                    end
                 end
             end
         endcase
