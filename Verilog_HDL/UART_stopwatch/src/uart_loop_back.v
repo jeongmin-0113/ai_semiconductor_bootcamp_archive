@@ -1,14 +1,51 @@
 `timescale 1ns / 1ps
-module uart_loop_back(
+
+module ascii_decoder (
+    input [7:0] i_data,
+    output run,
+    output stop,
+    output clear,
+    output mode,
+    output up,
+    output down,
+    output left,
+    output right
+);
+    reg [7:0] o_signals;
+    assign {run, stop, clear, mode, up, down, left, right} = o_signals;
+
+    always @(*) begin
+        // 기본값: 전체 0
+        o_signals = 8'h00;
+        case (i_data)
+            8'h72: o_signals = 8'b1000_0000;  // ascii r (run)
+            8'h73: o_signals = 8'b0100_0000;  // ascii s (stop)
+            8'h63: o_signals = 8'b0010_0000;  // ascii c (clear)
+            8'h6d: o_signals = 8'b0001_0000;  // ascii m (mode)
+            8'h55: o_signals = 8'b0000_1000;  // ascii U (up)
+            8'h44: o_signals = 8'b0000_0100;  // ascii D (down)
+            8'h4c: o_signals = 8'b0000_0010;  // ascii L (left)
+            8'h52: o_signals = 8'b0000_0001;  // ascii R (right)
+        endcase
+    end
+
+endmodule
+
+module uart_loop_back (
     input clk,
     input reset,
     input rx,
-    output tx
-    );
+    output tx,
+    output [7:0] rx_data,
+    output rx_done
+);
 
     wire w_baud_tick_x16;
     wire [7:0] w_rx_data;
     wire w_rx_done;
+
+    assign rx_data = w_rx_data;
+    assign rx_done = w_rx_done;
 
     baud_tick_x16 U_BAUD_TICK_x16 (
         .clk(clk),

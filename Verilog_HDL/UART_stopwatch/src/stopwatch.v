@@ -97,7 +97,7 @@ module top_stopwatch (
     control_unit U_CNTL_UNIT (
         .clk(clk),
         .reset(reset),
-        .i_runstop(w_btn_L & !sw[1]),
+        .i_runstop(w_btn_L& !sw[1]),
         .i_clear(w_btn_R & !sw[1]),
         .i_mode(w_btn_UP & !sw[1]),
         .i_save_load(w_btn_DOWN & !sw[1]),  // btn down
