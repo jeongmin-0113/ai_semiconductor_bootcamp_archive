@@ -3,7 +3,7 @@
 module top_stopwatch (
     input clk,
     input reset,
-    input [7:0] rx,
+    input rx,
     input btn_L,  // runstop(s) / 자리변경(w) 
     input btn_R,  // clear(s) / 자리변경(w)
     input btn_UP,  // mode(s) / up(w)
@@ -12,8 +12,33 @@ module top_stopwatch (
     output [3:0] fnd_com,
     output [7:0] fnd_data,
     output led,  // indicator
-    output [7:0] tx
+    output tx
 );
+
+    // rx로 pc에서 받은 데이터
+    wire [7:0] w_rx_data;
+    // // 데이터 저장할 reg
+    // reg [7:0] w_rw_data_reg;
+    // rx에서 데이터 모두 받으면 1clk 동안 1
+    wire w_rx_done;
+
+    // signal decoding에서 rw_done 활용하려면 f/f에 의한 1clk 지연 발생하면 안됨
+    // // rw done일 때만 reg에 rx 데이터를 저장 -> ascii decoding에 사용
+    // always @(posedge clk, posedge reset) begin
+    //     if (reset)begin
+    //         w_rw_data_reg <= 0;
+    //     end else begin
+    //         if (w_rw_done) w_rw_data_reg <= w_rw_data;
+    //     end
+    // end
+
+    // 1 clk 펄스 신호로 변환
+    wire w_ascii_run, w_ascii_stop, w_ascii_clear, w_ascii_mode, w_ascii_up, w_ascii_down, w_ascii_left, w_ascii_right, w_ascii_save, w_ascii_load;
+    // rx로 받은 ascii 디코딩 -> one hot encoded
+    wire [9:0] w_ascii_decoded;
+
+    // one hot encoded signal -> 1 clk 펄스 신호로 변환
+    assign {w_ascii_run, w_ascii_stop, w_ascii_clear, w_ascii_mode, w_ascii_up, w_ascii_down, w_ascii_left, w_ascii_right, w_ascii_save, w_ascii_load} = w_ascii_decoded & {10{w_rx_done}};
 
     // btn debounder OUTPUT SIGNAL
     wire w_btn_L, w_btn_R, w_btn_UP, w_btn_DOWN;
@@ -95,15 +120,6 @@ module top_stopwatch (
         .o_btn(w_btn_DOWN)
     );
 
-    wire [7:0] w_rx_data;
-    wire w_rx_done;
-
-    reg [7:0] w_data_reg;
-
-    always @(posedge clk, posedge reset) begin
-        if (reset) w_data_reg = 8'h00;
-        else if (w_rx_done) w_data_reg = w_rx_data;
-    end
 
     uart_loop_back U_LOOP_BACK (
         .clk(clk),
@@ -115,29 +131,34 @@ module top_stopwatch (
     );
 
     ascii_decoder U_ASCII_DECODER (
-        .i_data(w_data_reg),
-        .run(),
-        .stop(),
-        .clear(),
-        .mode(),
-        .up(),
-        .down(),
-        .left(),
-        .right()
+        .i_data(w_rx_data),
+        .o_signals(w_ascii_decoded)
+        // .run(),
+        // .stop(),
+        // .clear(),
+        // .mode(),
+        // .up(),
+        // .down(),
+        // .left(),
+        // .right()
     );
 
-    // todo: 디코딩된 signal들을 1 clk pulse로 변경
-    // todo: 1 clk pulse된 signal들 or로 control unit 연결
-    // todo: run/stop 나뉘어있는 rx signal을 control unit에서 통합
+    // todo: 디코딩된 signal들을 1 clk pulse로 변경 -> 완료
+    // todo: 1 clk pulse된 signal들 or로 control unit 연결 -> 완료
+    // todo: run/stop 나뉘어있는 rx signal을 control unit에서 통합 -> 완료
 
     // stopwatch control unit
     control_unit U_CNTL_UNIT (
         .clk(clk),
         .reset(reset),
         .i_runstop(w_btn_L & !sw[1]),
-        .i_clear(w_btn_R & !sw[1]),
-        .i_mode(w_btn_UP & !sw[1]),
+        .i_ascii_run(w_ascii_run),  // stop일 때 run 가능
+        .i_ascii_stop(w_ascii_stop),  // run일 때 stop 가능
+        .i_clear((w_ascii_clear | w_btn_R) & !sw[1]),
+        .i_mode((w_ascii_mode | w_btn_UP) & !sw[1]),
         .i_save_load(w_btn_DOWN & !sw[1]),  // btn down
+        .i_ascii_save(w_ascii_save), // 데이터 존재하지 않으면 save
+        .i_ascii_load(w_ascii_load), // 데이터 존재하면 load
         .i_is_data_saved(w_is_data_saved), // datapath에 데이터 저장되어 있는지 t/f 
         .o_runstop(w_runstop),
         .o_clear(w_clear),
@@ -167,8 +188,8 @@ module top_stopwatch (
     watch_control_unit U_CNTL_UNIT_WATCH (
         .clk  (clk),
         .reset(reset),
-        .btn_L(w_btn_L & sw[1]),
-        .btn_R(w_btn_R & sw[1]),
+        .btn_L((w_ascii_left | w_btn_L) & sw[1]),
+        .btn_R((w_ascii_right | w_btn_R) & sw[1]),
         .state(w_state)
     );
 
@@ -176,8 +197,8 @@ module top_stopwatch (
     watch_datapath U_DATAPATH_WATCH (
         .clk  (clk),
         .reset(reset),
-        .up   (w_btn_UP & sw[1]),
-        .down (w_btn_DOWN & sw[1]),
+        .up   ((w_ascii_up | w_btn_UP) & sw[1]),
+        .down ((w_ascii_down | w_btn_DOWN) & sw[1]),
         .state(w_state),
         .msec(w_msec_watch),
         .sec  (w_sec_watch),

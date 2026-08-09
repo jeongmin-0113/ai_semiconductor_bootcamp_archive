@@ -1,17 +1,21 @@
 `timescale 1ns / 1ps
 
 module control_unit (
-    input  clk,
-    input  reset,
-    input  i_runstop,
-    input  i_clear,
-    input  i_mode,
-    input  i_save_load, // btn down
+    input clk,
+    input reset,
+    input i_runstop,
+    input i_ascii_run,
+    input i_ascii_stop,
+    input i_clear,
+    input i_mode,
+    input i_save_load,  // btn down
     input i_is_data_saved, // datapath에 데이터 저장되어 있는지 t/f 
+    input i_ascii_save,
+    input i_ascii_load,
     output o_runstop,
     output o_clear,
     output o_mode,
-    output o_save, // data save trigger signal
+    output o_save,  // data save trigger signal
     output o_load  // data load trigger signal
 
 );
@@ -69,16 +73,16 @@ module control_unit (
                 clear_next = 1'b0;
                 load_next = 1'b0;
                 save_next = 1'b0;
-                if (i_runstop) n_state = RUN;
+                if (i_runstop | i_ascii_run) n_state = RUN;
                 else if (i_clear) n_state = CLEAR;
                 else if (i_mode) n_state = MODE;
-                else if (i_save_load & !i_is_data_saved) n_state = SAVE;
-                else if (i_save_load & i_is_data_saved) n_state = LOAD;
+                else if ((i_save_load | i_ascii_save) & !i_is_data_saved) n_state = SAVE;
+                else if ((i_save_load | i_ascii_load) & i_is_data_saved) n_state = LOAD;
                 else n_state = c_state;
             end
             RUN: begin
                 run_stop_next = 1'b1;
-                if (i_runstop) begin
+                if (i_runstop | i_ascii_stop) begin
                     n_state = STOP;
                 end
             end

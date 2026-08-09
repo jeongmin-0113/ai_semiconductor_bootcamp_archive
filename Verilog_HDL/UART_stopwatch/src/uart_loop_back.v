@@ -3,30 +3,32 @@
 
 module ascii_decoder (
     input  [7:0] i_data,
-    output       run,
-    output       stop,
-    output       clear,
-    output       mode,
-    output       up,
-    output       down,
-    output       left,
-    output       right
+    output reg [9:0] o_signals
+    // output       run,
+    // output       stop,
+    // output       clear,
+    // output       mode,
+    // output       up,
+    // output       down,
+    // output       left,
+    // output       right
 );
-    reg [7:0] o_signals;
-    assign {run, stop, clear, mode, up, down, left, right} = o_signals;
+    //    assign {run, stop, clear, mode, up, down, left, right} = o_signals;
 
     always @(*) begin
         // 기본값: 전체 0
-        o_signals = 8'h00;
+        o_signals = 10'b0000_0000_00;
         case (i_data)
-            8'h72: o_signals = 8'b1000_0000;  // ascii r (run)
-            8'h73: o_signals = 8'b0100_0000;  // ascii s (stop)
-            8'h63: o_signals = 8'b0010_0000;  // ascii c (clear)
-            8'h6d: o_signals = 8'b0001_0000;  // ascii m (mode)
-            8'h55: o_signals = 8'b0000_1000;  // ascii U (up)
-            8'h44: o_signals = 8'b0000_0100;  // ascii D (down)
-            8'h4c: o_signals = 8'b0000_0010;  // ascii L (left)
-            8'h52: o_signals = 8'b0000_0001;  // ascii R (right)
+            8'h72: o_signals = 10'b1000_0000_00;  // ascii r (run)
+            8'h73: o_signals = 10'b0100_0000_00;  // ascii s (stop)
+            8'h63: o_signals = 10'b0010_0000_00;  // ascii c (clear)
+            8'h6d: o_signals = 10'b0001_0000_00;  // ascii m (mode)
+            8'h55: o_signals = 10'b0000_1000_00;  // ascii U (up)
+            8'h44: o_signals = 10'b0000_0100_00;  // ascii D (down)
+            8'h4c: o_signals = 10'b0000_0010_00;  // ascii L (left)
+            8'h52: o_signals = 10'b0000_0001_00;  // ascii R (right)
+            8'h30: o_signals = 10'b0000_0000_10;  // ascii 0 (save)
+            8'h31: o_signals = 10'b0000_0000_01;  // ascii 1 (load)
         endcase
     end
 
