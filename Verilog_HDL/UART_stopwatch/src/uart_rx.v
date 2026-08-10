@@ -53,7 +53,7 @@ module uart_rx (
         rx_done_next = rx_done_reg;
         case (state_reg)
             IDLE: begin
-                rx_done_next = 0;
+                rx_done_next   = 0;
                 bit_count_next = 0;
                 if (i_baud_tick) begin
                     if (!rx) begin
@@ -124,21 +124,22 @@ module uart_rx (
             end
             STOP: begin
                 if (i_baud_tick) begin
-                    // if (tick_count >= 0) begin
-                    // tick 왔고 8번 셌음
-                    // 그럼 다음 state -> IDLE
-                    // tick_count_next = 4'h0;
-                    // bit_count_next = 3'b000;
-                    //data_next = 8'h00;
-                    state_next   = IDLE;
+                    if (tick_count >= 0) begin
+                        //tick 왔고 8번 셌음
+                        //그럼 다음 state -> IDLE
+                        tick_count_next = 4'h0;
+                        bit_count_next = 3'b000;
+                        //data_next = 8'h00;
+                        state_next = IDLE;
 
-                    // 다 끝났으니까 rx_done 띄우기
-                    rx_done_next = 1'b1;
-                    // end else begin
-                    //     // tick 왔고 아직 8번 안 셌음
-                    //     // 그럼 tick 한 번 더 세기
-                    //     tick_count_next = tick_count + 1;
-                    // end
+                        // 다 끝났으니까 rx_done 띄우기
+                        rx_done_next = 1'b1;
+                    end
+                    else begin
+                        // tick 왔고 아직 8번 안 셌음
+                        // 그럼 tick 한 번 더 세기
+                        tick_count_next = tick_count + 1;
+                    end
                 end
             end
         endcase
