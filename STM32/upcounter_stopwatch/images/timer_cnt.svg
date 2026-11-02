@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="250" viewBox="0 0 560 250" font-family="Arial, sans-serif" font-size="14">
+  <rect width="560" height="250" fill="#fff"/>
+  <g fill="none" stroke-width="2">
+    <path d="M50 200 H530 M50 200 V25" stroke="#333"/>
+    <path d="M50 60 H520" stroke="#1f6fd1" stroke-dasharray="6 4"/>
+    <path d="M50 200 L170 60 V200 L290 60 V200 L410 60 V200 L520 72" stroke="#333"/>
+  </g>
+  <g fill="#c0392b">
+    <circle cx="170" cy="60" r="5"/><circle cx="290" cy="60" r="5"/><circle cx="410" cy="60" r="5"/>
+    <text x="170" y="48" text-anchor="middle">interrupt</text>
+    <text x="290" y="48" text-anchor="middle">interrupt</text>
+    <text x="410" y="48" text-anchor="middle">interrupt</text>
+  </g>
+  <g fill="#333">
+    <text x="40" y="30" text-anchor="end">CNT</text>
+    <text x="40" y="65" text-anchor="end" fill="#1f6fd1">ARR</text>
+    <text x="40" y="205" text-anchor="end">0</text>
+    <text x="535" y="205">t</text>
+    <text x="110" y="225" text-anchor="middle" font-size="12" fill="#666">0, 1, 2 … ARR</text>
+    <text x="230" y="225" text-anchor="middle" font-size="12" fill="#666">다시 0부터</text>
+    <text x="50" y="245" font-size="12" fill="#666">PSC로 나눈 clock마다 CNT가 1씩 증가 → ARR에 도달하면 0으로 돌아가며 update interrupt 발생</text>
+  </g>
+</svg>
