@@ -4,3 +4,11 @@ STM32/.metadata/
 **/Release/
 **/.settings/
 *.launch
+
+# STM32: .ioc로 다시 생성 가능한 파일 (CubeMX Generate Code)
+STM32/**/Drivers/
+STM32/**/.mxproject
+STM32/**/*.zip
+
+# 별도 레포로 관리
+STM32/proj_analog_clock_stopwatch/
