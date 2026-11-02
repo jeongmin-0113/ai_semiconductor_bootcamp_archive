@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" font-family="Arial, sans-serif" font-size="14">
+  <rect width="420" height="300" fill="#fff"/>
+  <g fill="none" stroke="#333" stroke-width="2">
+    <!-- B1: pull-up + switch to GND -->
+    <path d="M70 40 V60 l-8 5 l16 10 l-16 10 l16 10 l-16 10 l16 10 l-8 5 V150 H150 M70 150 V185 M70 215 V250 M58 250 H82 M62 256 H78 M66 262 H74"/>
+    <path d="M70 189 L90 210"/>
+    <!-- LD2: PA5 -> R -> LED -> GND -->
+    <path d="M300 40 V60 l-8 5 l16 10 l-16 10 l16 10 l-16 10 l16 10 l-8 5 V170"/>
+    <path d="M288 170 H312 L300 194 Z M288 194 H312" fill="#cfc"/>
+    <path d="M300 194 V250 M288 250 H312 M292 256 H308 M296 262 H304"/>
+  </g>
+  <g fill="#333">
+    <circle cx="70" cy="150" r="3"/><circle cx="70" cy="187" r="3"/><circle cx="70" cy="213" r="3"/>
+    <text x="70" y="32" text-anchor="middle">3.3V</text>
+    <text x="84" y="95">4.7kΩ</text>
+    <text x="155" y="155" fill="#c0392b">PC13</text>
+    <text x="98" y="205">B1 (USER, blue)</text>
+    <text x="300" y="32" text-anchor="middle" fill="#c0392b">PA5</text>
+    <text x="314" y="95">510Ω</text>
+    <text x="320" y="187">LD2 (green)</text>
+    <text x="20" y="290" font-size="12" fill="#666">보드 회로를 단순화해서 다시 그림 (원본: MB1136 schematic)</text>
+  </g>
+</svg>

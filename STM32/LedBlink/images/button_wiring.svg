@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300" font-family="Arial, sans-serif" font-size="14">
+  <rect width="480" height="300" fill="#fff"/>
+  <g fill="none" stroke="#333" stroke-width="2">
+    <!-- column template: x = 60 / 210 / 360 -->
+    <path d="M60 40 V60 l-8 5 l16 10 l-16 10 l16 10 l-16 10 l16 10 l-8 5 V150 H130 M60 150 V185 M60 215 V250 M48 250 H72 M52 256 H68 M56 262 H64"/>
+    <path d="M60 189 L80 210"/>
+    <path d="M210 40 V60 l-8 5 l16 10 l-16 10 l16 10 l-16 10 l16 10 l-8 5 V150 H280 M210 150 V185 M210 215 V250 M198 250 H222 M202 256 H218 M206 262 H214"/>
+    <path d="M210 189 L230 210"/>
+    <path d="M360 40 V60 l-8 5 l16 10 l-16 10 l16 10 l-16 10 l16 10 l-8 5 V150 H430 M360 150 V185 M360 215 V250 M348 250 H372 M352 256 H368 M356 262 H364"/>
+    <path d="M360 189 L380 210"/>
+  </g>
+  <g fill="#333">
+    <circle cx="60" cy="150" r="3"/><circle cx="60" cy="187" r="3"/><circle cx="60" cy="213" r="3"/>
+    <circle cx="210" cy="150" r="3"/><circle cx="210" cy="187" r="3"/><circle cx="210" cy="213" r="3"/>
+    <circle cx="360" cy="150" r="3"/><circle cx="360" cy="187" r="3"/><circle cx="360" cy="213" r="3"/>
+    <text x="60" y="32" text-anchor="middle">3.3V</text>
+    <text x="210" y="32" text-anchor="middle">3.3V</text>
+    <text x="360" y="32" text-anchor="middle">3.3V</text>
+    <text x="74" y="95">4.7kΩ</text>
+    <text x="224" y="95">4.7kΩ</text>
+    <text x="374" y="95">4.7kΩ</text>
+    <text x="135" y="155" fill="#c0392b">PC0</text>
+    <text x="285" y="155" fill="#c0392b">PC1</text>
+    <text x="435" y="155" fill="#c0392b">PC2</text>
+    <text x="88" y="205">SW1</text>
+    <text x="238" y="205">SW2</text>
+    <text x="388" y="205">SW3</text>
+    <text x="20" y="290" font-size="12" fill="#666">풀업: 안 누르면 3.3V(1) / 누르면 GND(0)</text>
+  </g>
+</svg>

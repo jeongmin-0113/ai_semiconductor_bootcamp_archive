@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" font-family="Arial, sans-serif" font-size="14">
+  <rect width="600" height="300" fill="#fff"/>
+  <!-- body -->
+  <g fill="none" stroke="#333" stroke-width="2">
+    <rect x="60" y="95" width="480" height="100" fill="#f4f6f8"/>
+    <path d="M180 95 V195 M300 95 V195 M420 95 V195"/>
+    <!-- top pins 12..7 -->
+    <path d="M80 85 V95 M168 85 V95 M256 85 V95 M344 85 V95 M432 85 V95 M520 85 V95"/>
+    <!-- bottom pins 1..6 -->
+    <path d="M80 195 V205 M168 195 V205 M256 195 V205 M344 195 V205 M432 195 V205 M520 195 V205"/>
+  </g>
+  <g font-family="Consolas, monospace" font-size="72" fill="#bbb" text-anchor="middle">
+    <text x="120" y="172">8.</text><text x="240" y="172">8.</text><text x="360" y="172">8.</text><text x="480" y="172">8.</text>
+  </g>
+  <g text-anchor="middle">
+    <!-- top: MCU pin / signal / pin no. -->
+    <g fill="#c0392b"><text x="80" y="30">PA5</text><text x="168" y="30">PA6</text><text x="256" y="30">PA7</text><text x="344" y="30">PB6</text><text x="432" y="30">PC7</text><text x="520" y="30">PA9</text></g>
+    <g fill="#1f4e79" font-weight="bold"><text x="80" y="55">D1</text><text x="168" y="55">A</text><text x="256" y="55">F</text><text x="344" y="55">D2</text><text x="432" y="55">D3</text><text x="520" y="55">B</text></g>
+    <g fill="#666" font-size="12"><text x="80" y="80">12</text><text x="168" y="80">11</text><text x="256" y="80">10</text><text x="344" y="80">9</text><text x="432" y="80">8</text><text x="520" y="80">7</text></g>
+    <!-- bottom: pin no. / signal / MCU pin -->
+    <g fill="#666" font-size="12"><text x="80" y="220">1</text><text x="168" y="220">2</text><text x="256" y="220">3</text><text x="344" y="220">4</text><text x="432" y="220">5</text><text x="520" y="220">6</text></g>
+    <g fill="#1f4e79" font-weight="bold"><text x="80" y="242">E</text><text x="168" y="242">D</text><text x="256" y="242">DP</text><text x="344" y="242">C</text><text x="432" y="242">G</text><text x="520" y="242">D4</text></g>
+    <g fill="#c0392b"><text x="80" y="266">PA8</text><text x="168" y="266">PB10</text><text x="256" y="266">PB4</text><text x="344" y="266">PB5</text><text x="432" y="266">PB3</text><text x="520" y="266">PA10</text></g>
+  </g>
+  <text x="20" y="292" font-size="12" fill="#666">4자리 Common Cathode FND · D1~D4(자리 선택)에 330Ω 직렬 · 빨강: 연결한 MCU 핀</text>
+</svg>
