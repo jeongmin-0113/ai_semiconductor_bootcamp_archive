@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="610" height="300" viewBox="0 0 610 300" font-family="Arial, sans-serif" font-size="14">
+  <rect width="610" height="300" fill="#fff"/>
+  <g fill="none" stroke="#333" stroke-width="2">
+    <!-- push-pull -->
+    <rect x="30" y="40" width="230" height="210" stroke-dasharray="6 4" stroke="#999"/>
+    <path d="M110 55 V75"/>
+    <rect x="85" y="75" width="50" height="34" fill="#eef"/>
+    <path d="M110 109 V145 M110 145 V181"/>
+    <rect x="85" y="181" width="50" height="34" fill="#efe"/>
+    <path d="M110 215 V255 M98 255 H122 M102 261 H118 M106 267 H114"/>
+    <path d="M110 145 H290"/>
+    <path d="M60 92 H85 M60 198 H85"/>
+    <!-- open drain -->
+    <rect x="340" y="110" width="215" height="140" stroke-dasharray="6 4" stroke="#999"/>
+    <path d="M420 30 V50 l-8 5 l16 10 l-16 10 l16 10 l-16 10 l16 10 l-8 5 V145"/>
+    <path d="M420 145 H565"/>
+    <path d="M420 145 V181"/>
+    <rect x="395" y="181" width="50" height="34" fill="#efe"/>
+    <path d="M420 215 V255 M408 255 H432 M412 261 H428 M416 267 H424"/>
+    <path d="M370 198 H395"/>
+  </g>
+  <g fill="#333">
+    <circle cx="110" cy="145" r="3"/><circle cx="420" cy="145" r="3"/>
+    <text x="125" y="30" text-anchor="middle" font-weight="bold">Push-Pull</text>
+    <text x="110" y="52" text-anchor="middle" font-size="12">VDD (칩 내부)</text>
+    <text x="110" y="97" text-anchor="middle" font-size="12">P-MOS</text>
+    <text x="110" y="203" text-anchor="middle" font-size="12">N-MOS</text>
+    <text x="295" y="150">출력</text>
+    <text x="140" y="128" font-size="11" fill="#666">1 → P-MOS ON</text>
+    <text x="140" y="240" font-size="11" fill="#666">0 → N-MOS ON</text>
+    <text x="340" y="22" font-weight="bold">Open-Drain</text>
+    <text x="430" y="36" font-size="12">VCC (외부)</text>
+    <text x="434" y="85" font-size="12">pull-up 저항 (외부)</text>
+    <text x="420" y="203" text-anchor="middle" font-size="12">N-MOS</text>
+    <text x="570" y="150">출력</text>
+    <text x="350" y="128" font-size="11" fill="#666">칩 내부</text>
+    <text x="450" y="196" font-size="11" fill="#666">0 → LOW</text><text x="450" y="212" font-size="11" fill="#666">1 → 끊김 (HIGH)</text>
+    <text x="30" y="292" font-size="12" fill="#666">Push-Pull: 내부 전원으로 HIGH/LOW 모두 출력 · Open-Drain: LOW만 출력, HIGH는 외부 pull-up</text>
+  </g>
+</svg>
