@@ -27,6 +27,10 @@ NUCLEO-F411RE (STM32F411RET6) · STM32CubeIDE · HAL
 | 10/29~30 | [buzzer](buzzer) | PWM 부저 음계, Queue (링 버퍼) |
 | 10/30 | [digital_clock_all_in_one](digital_clock_all_in_one) | DHT11 + SR04 + 부저 + Queue 디지털 시계 통합 |
 | 11/02 | [SmartWatch_review](SmartWatch_review) | 스마트 워치 구조 리뷰 (작업 중) |
+| 11/03 | [ADC](ADC) | 조도센서 · 조이스틱 ADC, polling → interrupt → continuous → DMA |
+| 11/04~05 | [uart_protocol](uart_protocol) | UART 바이너리 프레임 (START/LEN/CMD/CHK), 1byte FSM 파서, 함수 포인터 콜백 |
+| 11/10 | [RTOS_test](RTOS_test) | FreeRTOS task · 스케줄링, task로 나눈 FND 카운터, ITM printf |
+| 11/11 | [DC_Motor_Controller](DC_Motor_Controller) | L298N DC 모터 PWM 속도 / 방향 제어, 버튼 FSM |
 
 ## 빌드
 
