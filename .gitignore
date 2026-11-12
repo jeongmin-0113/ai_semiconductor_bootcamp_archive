@@ -7,6 +7,8 @@ STM32/.metadata/
 
 # STM32: .ioc로 다시 생성 가능한 파일 (CubeMX Generate Code)
 STM32/**/Drivers/
+STM32/**/Middlewares/
+STM32/**/*.cfg
 STM32/**/.mxproject
 STM32/**/*.zip
 
