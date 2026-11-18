@@ -31,6 +31,8 @@ NUCLEO-F411RE (STM32F411RET6) · STM32CubeIDE · HAL
 | 11/04~05 | [uart_protocol](uart_protocol) | UART 바이너리 프레임 (START/LEN/CMD/CHK), 1byte FSM 파서, 함수 포인터 콜백 |
 | 11/10 | [RTOS_test](RTOS_test) | FreeRTOS task · 스케줄링, task로 나눈 FND 카운터, ITM printf |
 | 11/11 | [DC_Motor_Controller](DC_Motor_Controller) | L298N DC 모터 PWM 속도 / 방향 제어, 버튼 FSM |
+| 11/11~12 | [RTOS_DC_Motor](RTOS_DC_Motor) | 버튼 task → message queue → 모터 task, ap/task 구조로 분리 |
+| 11/12 | [RTOS_DC_Motor_UART_Mutex](RTOS_DC_Motor_UART_Mutex) | UART 명령 task + 두 번째 queue (구조체 포인터), LCD 공유 mutex |
 
 ## 빌드
 
