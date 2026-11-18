@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="354" height="642" viewBox="0 0 354 642">
+<style>
+.t{font:bold 14px sans-serif;fill:#222} .n{font:12px monospace;fill:#222}
+.e{font:10px monospace;fill:#888} .m{font:bold 11px sans-serif} .b{font:11px monospace;fill:#222}
+.grid{stroke:#ccc;stroke-dasharray:3 3} .w{fill:none;stroke:#1f4e79;stroke-width:1.6}
+.z{stroke:#aaa;stroke-dasharray:4 3} .bus{fill:#dbe9f6;stroke:#1f4e79;stroke-width:1.2}
+</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="8" y="16" class="t">1) VALID 먼저 → READY 대기</text>
+<line x1="110" y1="44" x2="110" y2="190" class="grid"/>
+<line x1="166" y1="44" x2="166" y2="190" class="grid"/>
+<line x1="222" y1="44" x2="222" y2="190" class="grid"/>
+<line x1="278" y1="44" x2="278" y2="190" class="grid"/>
+<line x1="334" y1="44" x2="334" y2="190" class="grid"/>
+<text x="166" y="202" class="e" text-anchor="middle">E1</text>
+<text x="222" y="202" class="e" text-anchor="middle">E2</text>
+<text x="278" y="202" class="e" text-anchor="middle">E3</text>
+<text x="334" y="202" class="e" text-anchor="middle">E4</text>
+<line x1="278" y1="44" x2="278" y2="190" stroke="#d1495b" stroke-width="2"/>
+<text x="281" y="38" fill="#d1495b" class="m">transfer</text>
+<text x="8" y="71" class="n">ACLK</text>
+<path d="M110,74 L110,58 L138.0,58 L138.0,74 L166,74 M166,74 L166,58 L194.0,58 L194.0,74 L222,74 M222,74 L222,58 L250.0,58 L250.0,74 L278,74 M278,74 L278,58 L306.0,58 L306.0,74 L334,74" class="w"/>
+<text x="8" y="105" class="n">INFO</text>
+<path d="M110,100.0 L166,100.0" class="w z"/>
+<path d="M166,100.0 L171,92 L273,92 L278,100.0 L273,108 L171,108 Z" class="bus"/>
+<text x="222.0" y="104" class="b" text-anchor="middle">info</text>
+<path d="M278,100.0 L334,100.0" class="w z"/>
+<text x="8" y="139" class="n">VALID</text>
+<path d="M110,142 L166,142 L171,126 L222,126 L278,126 L283,142 L334,142" class="w"/>
+<text x="8" y="173" class="n">READY</text>
+<path d="M110,176 L166,176 L222,176 L227,160 L278,160 L283,176 L334,176" class="w"/>
+<text x="8" y="230" class="t">2) READY 먼저 (미리 대기)</text>
+<line x1="110" y1="258" x2="110" y2="404" class="grid"/>
+<line x1="166" y1="258" x2="166" y2="404" class="grid"/>
+<line x1="222" y1="258" x2="222" y2="404" class="grid"/>
+<line x1="278" y1="258" x2="278" y2="404" class="grid"/>
+<line x1="334" y1="258" x2="334" y2="404" class="grid"/>
+<text x="166" y="416" class="e" text-anchor="middle">E1</text>
+<text x="222" y="416" class="e" text-anchor="middle">E2</text>
+<text x="278" y="416" class="e" text-anchor="middle">E3</text>
+<text x="334" y="416" class="e" text-anchor="middle">E4</text>
+<line x1="278" y1="258" x2="278" y2="404" stroke="#d1495b" stroke-width="2"/>
+<text x="281" y="252" fill="#d1495b" class="m">transfer</text>
+<text x="8" y="285" class="n">ACLK</text>
+<path d="M110,288 L110,272 L138.0,272 L138.0,288 L166,288 M166,288 L166,272 L194.0,272 L194.0,288 L222,288 M222,288 L222,272 L250.0,272 L250.0,288 L278,288 M278,288 L278,272 L306.0,272 L306.0,288 L334,288" class="w"/>
+<text x="8" y="319" class="n">INFO</text>
+<path d="M110,314.0 L222,314.0" class="w z"/>
+<path d="M222,314.0 L227,306 L273,306 L278,314.0 L273,322 L227,322 Z" class="bus"/>
+<text x="250.0" y="318" class="b" text-anchor="middle">info</text>
+<path d="M278,314.0 L334,314.0" class="w z"/>
+<text x="8" y="353" class="n">VALID</text>
+<path d="M110,356 L166,356 L222,356 L227,340 L278,340 L283,356 L334,356" class="w"/>
+<text x="8" y="387" class="n">READY</text>
+<path d="M110,390 L166,390 L171,374 L222,374 L278,374 L283,390 L334,390" class="w"/>
+<text x="8" y="444" class="t">3) VALID · READY 같은 사이클</text>
+<line x1="110" y1="472" x2="110" y2="618" class="grid"/>
+<line x1="166" y1="472" x2="166" y2="618" class="grid"/>
+<line x1="222" y1="472" x2="222" y2="618" class="grid"/>
+<line x1="278" y1="472" x2="278" y2="618" class="grid"/>
+<line x1="334" y1="472" x2="334" y2="618" class="grid"/>
+<text x="166" y="630" class="e" text-anchor="middle">E1</text>
+<text x="222" y="630" class="e" text-anchor="middle">E2</text>
+<text x="278" y="630" class="e" text-anchor="middle">E3</text>
+<text x="334" y="630" class="e" text-anchor="middle">E4</text>
+<line x1="278" y1="472" x2="278" y2="618" stroke="#d1495b" stroke-width="2"/>
+<text x="281" y="466" fill="#d1495b" class="m">transfer</text>
+<text x="8" y="499" class="n">ACLK</text>
+<path d="M110,502 L110,486 L138.0,486 L138.0,502 L166,502 M166,502 L166,486 L194.0,486 L194.0,502 L222,502 M222,502 L222,486 L250.0,486 L250.0,502 L278,502 M278,502 L278,486 L306.0,486 L306.0,502 L334,502" class="w"/>
+<text x="8" y="533" class="n">INFO</text>
+<path d="M110,528.0 L222,528.0" class="w z"/>
+<path d="M222,528.0 L227,520 L273,520 L278,528.0 L273,536 L227,536 Z" class="bus"/>
+<text x="250.0" y="532" class="b" text-anchor="middle">info</text>
+<path d="M278,528.0 L334,528.0" class="w z"/>
+<text x="8" y="567" class="n">VALID</text>
+<path d="M110,570 L166,570 L222,570 L227,554 L278,554 L283,570 L334,570" class="w"/>
+<text x="8" y="601" class="n">READY</text>
+<path d="M110,604 L166,604 L222,604 L227,588 L278,588 L283,604 L334,604" class="w"/>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="466" height="452" viewBox="0 0 466 452">
+<style>
+.t{font:bold 14px sans-serif;fill:#222} .n{font:12px monospace;fill:#222}
+.e{font:10px monospace;fill:#888} .m{font:bold 11px sans-serif} .b{font:11px monospace;fill:#222}
+.grid{stroke:#ccc;stroke-dasharray:3 3} .w{fill:none;stroke:#1f4e79;stroke-width:1.6}
+.z{stroke:#aaa;stroke-dasharray:4 3} .bus{fill:#dbe9f6;stroke:#1f4e79;stroke-width:1.2}
+</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="8" y="16" class="t">Write transaction (axi_master + axi_slave, 코드 기준)</text>
+<line x1="110" y1="44" x2="110" y2="428" class="grid"/>
+<line x1="166" y1="44" x2="166" y2="428" class="grid"/>
+<line x1="222" y1="44" x2="222" y2="428" class="grid"/>
+<line x1="278" y1="44" x2="278" y2="428" class="grid"/>
+<line x1="334" y1="44" x2="334" y2="428" class="grid"/>
+<line x1="390" y1="44" x2="390" y2="428" class="grid"/>
+<line x1="446" y1="44" x2="446" y2="428" class="grid"/>
+<text x="166" y="440" class="e" text-anchor="middle">E1</text>
+<text x="222" y="440" class="e" text-anchor="middle">E2</text>
+<text x="278" y="440" class="e" text-anchor="middle">E3</text>
+<text x="334" y="440" class="e" text-anchor="middle">E4</text>
+<text x="390" y="440" class="e" text-anchor="middle">E5</text>
+<text x="446" y="440" class="e" text-anchor="middle">E6</text>
+<line x1="278" y1="44" x2="278" y2="428" stroke="#d1495b" stroke-width="2"/>
+<text x="281" y="38" fill="#d1495b" class="m">AW</text>
+<line x1="334" y1="44" x2="334" y2="428" stroke="#2a9d8f" stroke-width="2"/>
+<text x="337" y="38" fill="#2a9d8f" class="m">W</text>
+<line x1="390" y1="44" x2="390" y2="428" stroke="#7b2cbf" stroke-width="2"/>
+<text x="393" y="38" fill="#7b2cbf" class="m">B</text>
+<text x="8" y="71" class="n">ACLK</text>
+<path d="M110,74 L110,58 L138.0,58 L138.0,74 L166,74 M166,74 L166,58 L194.0,58 L194.0,74 L222,74 M222,74 L222,58 L250.0,58 L250.0,74 L278,74 M278,74 L278,58 L306.0,58 L306.0,74 L334,74 M334,74 L334,58 L362.0,58 L362.0,74 L390,74 M390,74 L390,58 L418.0,58 L418.0,74 L446,74" class="w"/>
+<text x="8" y="105" class="n">transfer</text>
+<path d="M110,92 L166,92 L171,108 L222,108 L278,108 L334,108 L390,108 L446,108" class="w"/>
+<text x="8" y="139" class="n">AWADDR</text>
+<path d="M110,134.0 L166,134.0" class="w z"/>
+<path d="M166,134.0 L171,126 L273,126 L278,134.0 L273,142 L171,142 Z" class="bus"/>
+<text x="222.0" y="138" class="b" text-anchor="middle">addr</text>
+<path d="M278,134.0 L446,134.0" class="w z"/>
+<text x="8" y="173" class="n">AWVALID</text>
+<path d="M110,176 L166,176 L171,160 L222,160 L278,160 L283,176 L334,176 L390,176 L446,176" class="w"/>
+<text x="8" y="207" class="n">AWREADY</text>
+<path d="M110,210 L166,210 L222,210 L227,194 L278,194 L283,210 L334,210 L390,210 L446,210" class="w"/>
+<text x="8" y="241" class="n">WDATA</text>
+<path d="M110,236.0 L166,236.0" class="w z"/>
+<path d="M166,236.0 L171,228 L329,228 L334,236.0 L329,244 L171,244 Z" class="bus"/>
+<text x="250.0" y="240" class="b" text-anchor="middle">wdata</text>
+<path d="M334,236.0 L446,236.0" class="w z"/>
+<text x="8" y="275" class="n">WVALID</text>
+<path d="M110,278 L166,278 L171,262 L222,262 L278,262 L334,262 L339,278 L390,278 L446,278" class="w"/>
+<text x="8" y="309" class="n">WREADY</text>
+<path d="M110,312 L166,312 L222,312 L278,312 L283,296 L334,296 L339,312 L390,312 L446,312" class="w"/>
+<text x="8" y="343" class="n">BVALID</text>
+<path d="M110,346 L166,346 L222,346 L278,346 L334,346 L339,330 L390,330 L395,346 L446,346" class="w"/>
+<text x="8" y="377" class="n">BREADY</text>
+<path d="M110,380 L166,380 L222,380 L227,364 L278,364 L334,364 L390,364 L395,380 L446,380" class="w"/>
+<text x="8" y="411" class="n">ready</text>
+<path d="M110,414 L166,414 L222,414 L278,414 L334,414 L339,398 L390,398 L395,414 L446,414" class="w"/>
+</svg>
