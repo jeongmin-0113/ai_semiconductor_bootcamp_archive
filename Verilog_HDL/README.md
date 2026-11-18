@@ -27,6 +27,7 @@ Basys3 (Artix-7 XC7A35T) · Vivado 2020.2 · Verilog / SystemVerilog · UVM (Syn
 | 08/24 | [adder_UVM](adder_UVM) | Vivado UVM 설정, `uvm_sequence_item` / factory |
 | 08/25~09/07 | [FIFO_UVM](FIFO_UVM) | 동기식 FIFO UVM 검증 환경 + functional coverage (발표 2) |
 | 09/02~10 | [rv32i_cpu_single_cycle](rv32i_cpu_single_cycle) | RISC-V RV32I 싱글 사이클 CPU |
+| 11/18 | [AXI_Master](AXI_Master) | AXI4-Lite master / slave, 5채널 VALID · READY handshake FSM, slave 레지스터 4개 |
 
 ## 빌드
 
