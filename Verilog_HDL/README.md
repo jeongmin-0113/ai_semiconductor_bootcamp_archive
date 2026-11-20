@@ -30,6 +30,7 @@ Basys3 (Artix-7 XC7A35T) · Vivado 2020.2 · Verilog / SystemVerilog · UVM (Syn
 | 11/18 | [AXI_Master](AXI_Master) | AXI4-Lite master / slave, 5채널 VALID · READY handshake FSM, slave 레지스터 4개 |
 | 11/19 | [AXI_master_slave_sim](AXI_master_slave_sim) | AXI4-Lite slave 채널별 FSM 재작성, master–slave 연결 TB (write 4 → read 4) |
 | 11/19 | [AXI_Lite_template](AXI_Lite_template) | Vivado AXI4-Lite peripheral 템플릿 분석, `aw_en` · `WSTRB` byte write, master 모사 TB |
+| 11/20 | [MicroBlaze_AXI_GPIO](MicroBlaze_AXI_GPIO) | tri-state GPIO 코어 → AXI4-Lite IP 패키징 (`CR` · `ODR` · `IDR`), MicroBlaze Block Design, XSA → Vitis C로 LED 16개 · 버튼 제어 |
 
 ## 빌드
 
