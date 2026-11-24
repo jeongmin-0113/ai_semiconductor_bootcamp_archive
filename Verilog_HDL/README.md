@@ -31,6 +31,7 @@ Basys3 (Artix-7 XC7A35T) · Vivado 2020.2 · Verilog / SystemVerilog · UVM (Syn
 | 11/19 | [AXI_master_slave_sim](AXI_master_slave_sim) | AXI4-Lite slave 채널별 FSM 재작성, master–slave 연결 TB (write 4 → read 4) |
 | 11/19 | [AXI_Lite_template](AXI_Lite_template) | Vivado AXI4-Lite peripheral 템플릿 분석, `aw_en` · `WSTRB` byte write, master 모사 TB |
 | 11/20 | [MicroBlaze_AXI_GPIO](MicroBlaze_AXI_GPIO) | tri-state GPIO 코어 → AXI4-Lite IP 패키징 (`CR` · `ODR` · `IDR`), MicroBlaze Block Design, XSA → Vitis C로 LED 16개 · 버튼 제어 |
+| 11/23 | [UART_AXI](UART_AXI) | AXI UART용 UART 코어 재작성 (115200bps, parameter화), 비트 중앙 샘플링 · 2FF synchronizer, loopback TB, SR / TDR / RDR 레지스터 구상 |
 
 ## 빌드
 
