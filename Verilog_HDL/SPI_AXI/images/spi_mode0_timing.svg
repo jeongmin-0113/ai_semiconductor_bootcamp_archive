@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1194" height="214" viewBox="0 0 1194 214">
+<style>
+.t{font:bold 14px sans-serif;fill:#222} .n{font:12px monospace;fill:#222}
+.e{font:10px monospace;fill:#888} .m{font:bold 11px sans-serif} .b{font:11px monospace;fill:#222}
+.grid{stroke:#ccc;stroke-dasharray:3 3} .w{fill:none;stroke:#1f4e79;stroke-width:1.6}
+.z{stroke:#aaa;stroke-dasharray:4 3} .bus{fill:#dbe9f6;stroke:#1f4e79;stroke-width:1.2}
+</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="8" y="16" class="t">SPI Mode 0 (CPOL=0, CPHA=0) 1-byte — 1칸 = SCLK 반주기 = (clk_div+1) clk</text>
+<line x1="110" y1="44" x2="110" y2="190" class="grid"/>
+<line x1="166" y1="44" x2="166" y2="190" class="grid"/>
+<line x1="222" y1="44" x2="222" y2="190" class="grid"/>
+<line x1="278" y1="44" x2="278" y2="190" class="grid"/>
+<line x1="334" y1="44" x2="334" y2="190" class="grid"/>
+<line x1="390" y1="44" x2="390" y2="190" class="grid"/>
+<line x1="446" y1="44" x2="446" y2="190" class="grid"/>
+<line x1="502" y1="44" x2="502" y2="190" class="grid"/>
+<line x1="558" y1="44" x2="558" y2="190" class="grid"/>
+<line x1="614" y1="44" x2="614" y2="190" class="grid"/>
+<line x1="670" y1="44" x2="670" y2="190" class="grid"/>
+<line x1="726" y1="44" x2="726" y2="190" class="grid"/>
+<line x1="782" y1="44" x2="782" y2="190" class="grid"/>
+<line x1="838" y1="44" x2="838" y2="190" class="grid"/>
+<line x1="894" y1="44" x2="894" y2="190" class="grid"/>
+<line x1="950" y1="44" x2="950" y2="190" class="grid"/>
+<line x1="1006" y1="44" x2="1006" y2="190" class="grid"/>
+<line x1="1062" y1="44" x2="1062" y2="190" class="grid"/>
+<line x1="1118" y1="44" x2="1118" y2="190" class="grid"/>
+<line x1="1174" y1="44" x2="1174" y2="190" class="grid"/>
+<text x="166" y="202" class="e" text-anchor="middle">E1</text>
+<text x="222" y="202" class="e" text-anchor="middle">E2</text>
+<text x="278" y="202" class="e" text-anchor="middle">E3</text>
+<text x="334" y="202" class="e" text-anchor="middle">E4</text>
+<text x="390" y="202" class="e" text-anchor="middle">E5</text>
+<text x="446" y="202" class="e" text-anchor="middle">E6</text>
+<text x="502" y="202" class="e" text-anchor="middle">E7</text>
+<text x="558" y="202" class="e" text-anchor="middle">E8</text>
+<text x="614" y="202" class="e" text-anchor="middle">E9</text>
+<text x="670" y="202" class="e" text-anchor="middle">E10</text>
+<text x="726" y="202" class="e" text-anchor="middle">E11</text>
+<text x="782" y="202" class="e" text-anchor="middle">E12</text>
+<text x="838" y="202" class="e" text-anchor="middle">E13</text>
+<text x="894" y="202" class="e" text-anchor="middle">E14</text>
+<text x="950" y="202" class="e" text-anchor="middle">E15</text>
+<text x="1006" y="202" class="e" text-anchor="middle">E16</text>
+<text x="1062" y="202" class="e" text-anchor="middle">E17</text>
+<text x="1118" y="202" class="e" text-anchor="middle">E18</text>
+<text x="1174" y="202" class="e" text-anchor="middle">E19</text>
+<line x1="222" y1="44" x2="222" y2="190" stroke="#d1495b" stroke-width="2"/>
+<text x="225" y="38" fill="#d1495b" class="m">↑샘플</text>
+<line x1="278" y1="44" x2="278" y2="190" stroke="#1f4e79" stroke-width="2"/>
+<text x="281" y="38" fill="#1f4e79" class="m">↓shift</text>
+<line x1="1062" y1="44" x2="1062" y2="190" stroke="#2a7d3f" stroke-width="2"/>
+<text x="1065" y="38" fill="#2a7d3f" class="m">STOP</text>
+<text x="8" y="71" class="n">SS_n</text>
+<path d="M110,58 L166,58 L171,74 L222,74 L278,74 L334,74 L390,74 L446,74 L502,74 L558,74 L614,74 L670,74 L726,74 L782,74 L838,74 L894,74 L950,74 L1006,74 L1062,74 L1118,74 L1123,58 L1174,58" class="w"/>
+<text x="8" y="105" class="n">SCLK</text>
+<path d="M110,108 L166,108 L222,108 L227,92 L278,92 L283,108 L334,108 L339,92 L390,92 L395,108 L446,108 L451,92 L502,92 L507,108 L558,108 L563,92 L614,92 L619,108 L670,108 L675,92 L726,92 L731,108 L782,108 L787,92 L838,92 L843,108 L894,108 L899,92 L950,92 L955,108 L1006,108 L1011,92 L1062,92 L1067,108 L1118,108 L1174,108" class="w"/>
+<text x="8" y="139" class="n">MOSI</text>
+<path d="M110,134.0 L166,134.0" class="w z"/>
+<path d="M166,134.0 L171,126 L273,126 L278,134.0 L273,142 L171,142 Z" class="bus"/>
+<text x="222.0" y="138" class="b" text-anchor="middle">b7</text>
+<path d="M278,134.0 L283,126 L385,126 L390,134.0 L385,142 L283,142 Z" class="bus"/>
+<text x="334.0" y="138" class="b" text-anchor="middle">b6</text>
+<path d="M390,134.0 L395,126 L497,126 L502,134.0 L497,142 L395,142 Z" class="bus"/>
+<text x="446.0" y="138" class="b" text-anchor="middle">b5</text>
+<path d="M502,134.0 L507,126 L609,126 L614,134.0 L609,142 L507,142 Z" class="bus"/>
+<text x="558.0" y="138" class="b" text-anchor="middle">b4</text>
+<path d="M614,134.0 L619,126 L721,126 L726,134.0 L721,142 L619,142 Z" class="bus"/>
+<text x="670.0" y="138" class="b" text-anchor="middle">b3</text>
+<path d="M726,134.0 L731,126 L833,126 L838,134.0 L833,142 L731,142 Z" class="bus"/>
+<text x="782.0" y="138" class="b" text-anchor="middle">b2</text>
+<path d="M838,134.0 L843,126 L945,126 L950,134.0 L945,142 L843,142 Z" class="bus"/>
+<text x="894.0" y="138" class="b" text-anchor="middle">b1</text>
+<path d="M950,134.0 L955,126 L1057,126 L1062,134.0 L1057,142 L955,142 Z" class="bus"/>
+<text x="1006.0" y="138" class="b" text-anchor="middle">b0</text>
+<path d="M1062,134.0 L1174,134.0" class="w z"/>
+<text x="8" y="173" class="n">MISO</text>
+<path d="M110,168.0 L166,168.0" class="w z"/>
+<path d="M166,168.0 L171,160 L273,160 L278,168.0 L273,176 L171,176 Z" class="bus"/>
+<text x="222.0" y="172" class="b" text-anchor="middle">b7</text>
+<path d="M278,168.0 L283,160 L385,160 L390,168.0 L385,176 L283,176 Z" class="bus"/>
+<text x="334.0" y="172" class="b" text-anchor="middle">b6</text>
+<path d="M390,168.0 L395,160 L497,160 L502,168.0 L497,176 L395,176 Z" class="bus"/>
+<text x="446.0" y="172" class="b" text-anchor="middle">b5</text>
+<path d="M502,168.0 L507,160 L609,160 L614,168.0 L609,176 L507,176 Z" class="bus"/>
+<text x="558.0" y="172" class="b" text-anchor="middle">b4</text>
+<path d="M614,168.0 L619,160 L721,160 L726,168.0 L721,176 L619,176 Z" class="bus"/>
+<text x="670.0" y="172" class="b" text-anchor="middle">b3</text>
+<path d="M726,168.0 L731,160 L833,160 L838,168.0 L833,176 L731,176 Z" class="bus"/>
+<text x="782.0" y="172" class="b" text-anchor="middle">b2</text>
+<path d="M838,168.0 L843,160 L945,160 L950,168.0 L945,176 L843,176 Z" class="bus"/>
+<text x="894.0" y="172" class="b" text-anchor="middle">b1</text>
+<path d="M950,168.0 L955,160 L1057,160 L1062,168.0 L1057,176 L955,176 Z" class="bus"/>
+<text x="1006.0" y="172" class="b" text-anchor="middle">b0</text>
+<path d="M1062,168.0 L1174,168.0" class="w z"/>
+</svg>
