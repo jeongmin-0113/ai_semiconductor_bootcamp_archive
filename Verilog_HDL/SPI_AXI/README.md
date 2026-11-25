@@ -164,6 +164,12 @@ endcase
 - `mosi`도 `sclk`와 같은 2단 동기화를 거침 → 두 신호의 지연이 같아서 rising edge에서 읽는 MOSI 값이 어긋나지 않음
 - 시스템 클럭으로 SCLK를 샘플링하므로 SCLK가 시스템 클럭보다 충분히 느려야 함 (TB는 `clk_div = 4`, 10Mbps)
 
+> 참고: `clk_div`는 **3 이상**이어야 합니다 (코드 기준 계산, 시뮬레이션으로는 미확인).
+> slave는 SCLK 하강을 2FF sync + `prev_sclk` 비교로 검출하므로, master가 SCLK를 내린 뒤 약 3클럭 후에 `miso_r`을 갱신합니다.
+> master는 하강 후 `clk_div + 1` 클럭 뒤 다음 `half_tick`(상승)에서 `miso`를 샘플하므로, `clk_div ≤ 2`이면 갱신 전 이전 비트를 읽게 됩니다.
+> 첫 비트도 같은 조건입니다 (`ss_n` 동기화 2클럭 + `IDLE → START → miso` 출력).
+> 속도를 더 올리려면 slave 동기화 지연을 줄이거나, master 샘플 시점을 늦추는 방식이 필요합니다.
+
 ---
 
 ## AXI4-Lite 래퍼 — `spi_master_v1_0`
