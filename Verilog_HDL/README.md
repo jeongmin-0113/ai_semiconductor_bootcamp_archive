@@ -33,6 +33,7 @@ Basys3 (Artix-7 XC7A35T) · Vivado 2020.2 · Verilog / SystemVerilog · UVM (Syn
 | 11/20 | [MicroBlaze_AXI_GPIO](MicroBlaze_AXI_GPIO) | tri-state GPIO 코어 → AXI4-Lite IP 패키징 (`CR` · `ODR` · `IDR`), MicroBlaze Block Design, XSA → Vitis C로 LED 16개 · 버튼 제어 |
 | 11/23 | [UART_AXI](UART_AXI) | AXI UART용 UART 코어 재작성 (115200bps, parameter화), 비트 중앙 샘플링 · 2FF synchronizer, loopback TB, SR / TDR / RDR 레지스터 구상 |
 | 11/24 | [MicroBlaze_AXI_UART](MicroBlaze_AXI_UART) | UART 코어 → AXI4-Lite IP (`SR` · `TDR` · `RDR` · `CR`), CR bit0 rx 인터럽트 → AXI INTC, Xilinx AXI GPIO, Vitis C 드라이버로 JB1–JB2 loopback |
+| 11/25 | [SPI_AXI](SPI_AXI) | SPI Mode 0 master / slave (`half_tick` 분주, 2FF sync · SCLK edge 검출), AXI4-Lite 래퍼 (`SR` · `TDR` · `RDR` · `BRR`), loopback · master–slave · AXI 경유 TB |
 
 ## 빌드
 
